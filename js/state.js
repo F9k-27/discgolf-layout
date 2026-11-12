@@ -17,7 +17,7 @@ export const TYPES = {
   hazard:   { geom: 'Polygon',    color: '#fb8c00' },
   water:    { geom: 'Polygon',    color: '#1e88e5' },
   mando:    { geom: 'Point',      color: '#d50000', rotation: 0 },
-  mandoObj: { geom: 'Point',      color: '#d50000', size: 1, label: 'M' },
+  mandoObj: { geom: 'Polygon',    color: '#d50000', label: 'M' },
   dropzone: { geom: 'Point',      color: '#fdd835' },
   tree:     { geom: 'Point',      color: '#2e7d32', size: 6 },
   object:   { geom: 'Point',      color: '#6d4c41', size: 2, label: '' },
@@ -91,12 +91,23 @@ export function normalizeProject(o) {
     const d = newHole(i + 1);
     return {
       ...d, ...h, n: i + 1,
-      features: Array.isArray(h.features) ? h.features : [],
+      features: (Array.isArray(h.features) ? h.features : []).map(migrateFeature),
       page: { ...d.page, ...(h.page || {}), boxes: { ...d.page.boxes, ...((h.page || {}).boxes || {}) } },
     };
   });
   p.app = APP_ID; p.version = VERSION;
   return p;
+}
+
+// Older files stored the mando object as a point: turn it into a small octagon of its size
+function migrateFeature(f) {
+  if (f.type !== 'mandoObj' || !f.geom || f.geom.type !== 'Point') return f;
+  const [x, y] = f.geom.coordinates;
+  const r = Math.max(((f.props && f.props.size) || 1) / 2, 1);
+  const ring = [];
+  for (let i = 0; i <= 8; i++) { const a = (i % 8) * Math.PI / 4; ring.push([+(x + r * Math.sin(a)).toFixed(2), +(y + r * Math.cos(a)).toFixed(2)]); }
+  const props = { ...(f.props || {}) }; delete props.size;
+  return { ...f, geom: { type: 'Polygon', coordinates: [ring] }, props };
 }
 
 // Strip runtime-only keys (prefixed with _)

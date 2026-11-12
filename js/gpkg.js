@@ -99,7 +99,7 @@ function collect(project) {
         case 'hazard': layer('hazards', 'POLYGON', { ...hcols, color: 'TEXT' }).rows.push({ geom: g, ...base, color: p.color }); break;
         case 'water': layer('water', 'POLYGON', { ...hcols, color: 'TEXT' }).rows.push({ geom: g, ...base, color: p.color }); break;
         case 'mando': layer('mandos', 'POINT', { ...hcols, direction_deg: 'REAL', color: 'TEXT' }).rows.push({ geom: g, ...base, direction_deg: p.rotation ?? 0, color: p.color }); break;
-        case 'mandoObj': layer('mando_objects', 'POINT', { ...hcols, label: 'TEXT', size_m: 'REAL', color: 'TEXT' }).rows.push({ geom: g, ...base, label: p.label || '', size_m: p.size, color: p.color }); break;
+        case 'mandoObj': layer('mando_objects', 'POLYGON', { ...hcols, label: 'TEXT', color: 'TEXT' }).rows.push({ geom: g, ...base, label: p.label || '', color: p.color }); break;
         case 'dropzone': layer('drop_zones', 'POINT', hcols).rows.push({ geom: g, ...base }); break;
         case 'tree': layer('trees', 'POINT', { ...hcols, size_m: 'REAL', color: 'TEXT' }).rows.push({ geom: g, ...base, size_m: p.size, color: p.color }); break;
         case 'object': layer('objects', 'POINT', { ...hcols, label: 'TEXT', size_m: 'REAL', color: 'TEXT' }).rows.push({ geom: g, ...base, label: p.label || '', size_m: p.size, color: p.color }); break;

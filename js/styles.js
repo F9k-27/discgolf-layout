@@ -120,10 +120,9 @@ export function featureStyle(f, res, o) {
       break;
     }
     case 'mandoObj': {
-      const p = g.getCoordinates();
-      st.push(new S.Style({ geometry: new G.Circle(p, realR(val('size'), 1.1)), fill: new S.Fill({ color: hexA(c, 0.85) }), stroke: new S.Stroke({ color: '#ffffff', width: px(0.35) }) }));
+      st.push(new S.Style({ fill: new S.Fill({ color: hexA(c, 0.55) }), stroke: new S.Stroke({ color: c, width: px(0.5) }) }));
       const lbl = !o.legend && f.get('label');
-      if (lbl) st.push(new S.Style({ geometry: new G.Point(p), text: new S.Text({ text: lbl, font: `bold ${px(2.2)}px ${FONT}`, fill: new S.Fill({ color: c }), stroke: halo(px), textAlign: 'left', offsetX: px(2.2), overflow: true }) }));
+      if (lbl) st.push(new S.Style({ text: new S.Text({ text: lbl, font: `bold ${px(2.2)}px ${FONT}`, fill: new S.Fill({ color: '#ffffff' }), stroke: new S.Stroke({ color: c, width: px(0.6) }), overflow: true }) }));
       break;
     }
     case 'dropzone': {
