@@ -1,6 +1,6 @@
 # Disc Golf Layout
 
-A static web app for designing disc golf course layouts. It runs entirely in the browser with no server or build step, so it is ready for **GitHub Pages**.
+A static web app for designing disc golf course layouts. It runs entirely in the browser with no server or build step, so it is ready for **GitHub Pages**
 
 **Workflow:** create a project → lay out every hole on a print-ready page → export a **PDF course guide** and a **GeoPackage** for GIS → save the project as **JSON** and continue later. UI in **čeština / English**.
 
