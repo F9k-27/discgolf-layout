@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disc Golf Layout</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23e46c2b'/%3E%3Cellipse cx='16' cy='16' rx='9' ry='4' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="lib/ol.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="lib/ol.js"></script>
+<script src="lib/proj4.js"></script>
+<script src="lib/jspdf.umd.min.js"></script>
+<script src="lib/html2canvas.min.js"></script>
+<script src="lib/sql-wasm.js"></script>
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#e46c2b"/><ellipse cx="16" cy="16" rx="9" ry="4" fill="none" stroke="#fff" stroke-width="2"/></svg>
+    <span data-i18n="app.title">Disc Golf Layout</span>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-tab="project" data-i18n="tab.project">Projekt</button>
+    <button data-tab="holes" data-i18n="tab.holes">Jamky</button>
+    <button data-tab="layers" data-i18n="tab.layers">Mapové vrstvy</button>
+    <button data-tab="export" data-i18n="tab.export">Export</button>
+  </nav>
+  <div class="top-actions">
+    <span class="proj-name" id="projName"></span>
+    <button class="tbtn" id="btnNew" data-i18n="btn.new">Nový</button>
+    <button class="tbtn" id="btnOpen" data-i18n="btn.open">Otevřít</button>
+    <button class="tbtn primary" id="btnSave" data-i18n="btn.save">Uložit JSON</button>
+    <div class="lang" id="lang"><button data-lang="cz">CZ</button><button data-lang="en">EN</button></div>
+  </div>
+</header>
+
+<main>
+  <section class="view" id="view-start">
+    <div class="start">
+      <div class="start-card">
+        <h1 data-i18n="start.title"></h1>
+        <p class="lead" data-i18n="start.lead"></p>
+        <ol class="steps">
+          <li data-i18n="start.step1"></li>
+          <li data-i18n="start.step2"></li>
+          <li data-i18n="start.step3"></li>
+        </ol>
+        <div class="start-actions">
+          <button class="btn primary big" id="startNew" data-i18n="start.new"></button>
+          <button class="btn big" id="startOpen" data-i18n="start.open"></button>
+        </div>
+        <div id="startContinue"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-project">
+    <aside class="side" id="projSide"></aside>
+    <div class="mapwrap"><div id="pmap" class="map"></div><div class="map-hint" id="pHint"></div></div>
+    <aside class="side right" id="projRight"></aside>
+  </section>
+
+  <section class="view" id="view-holes">
+    <aside class="side" id="holeSide"></aside>
+    <div class="editor">
+      <div class="editor-bar" id="editorBar"></div>
+      <div class="frame-wrap" id="frameWrap">
+        <div class="page" id="holePage">
+          <div class="map-area" id="holeArea"><div id="hmap"></div></div>
+          <div class="page-foot" id="holeFoot"></div>
+        </div>
+      </div>
+    </div>
+    <aside class="side right" id="propPanel"></aside>
+  </section>
+
+  <section class="view" id="view-layers">
+    <div class="narrow" id="layersPanel"></div>
+  </section>
+
+  <section class="view" id="view-export">
+    <div class="narrow" id="exportPanel"></div>
+  </section>
+</main>
+
+<input type="file" id="fileOpen" accept=".json,application/json" hidden>
+<div id="busy" class="busy hidden"><div class="busy-box"><div class="spinner"></div><div id="busyText"></div></div></div>
+<div id="toast" class="toast"></div>
+</body>
+</html>
